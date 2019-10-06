@@ -11,9 +11,9 @@ const {
 
 
 const books = [
-    {name : 'Harry Potter', genre: 'Fantasy', id: '1'},
-    {name : 'Eragon', genre: 'Fantasy', id: '2'},
-    {name : 'Drizzt', genre: 'Fantasy', id: '3'},
+    {name : 'Harry Potter', genre: 'Fantasy', id: '1', authorId: '1'},
+    {name : 'Eragon', genre: 'Fantasy', id: '2', authorId: '2'},
+    {name : 'Drizzt', genre: 'Fantasy', id: '3', authorId: '3'},
 ];
 
 const authors = [
@@ -27,7 +27,13 @@ const BookType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
-        genre: {type: GraphQLString}
+        genre: {type: GraphQLString},
+        author: {
+            type:AuthorType,
+            resolve(parent, args){
+                return _.find(authors, {id: parent.authorId})
+            }
+        }
     })
 })
 
